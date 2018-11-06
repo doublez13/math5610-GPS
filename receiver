@@ -91,7 +91,7 @@ def calc_veh_pos(Sat_data):
   s_norm = -1
   #initialize xv to geo location of b12 lamp post at last ts
   xv = geo_to_cart(prev_time, 40, 45, 55, 1, 111, 50, 58.0, -1, 1372.00)
-  while s_norm == -1  or s_norm > 0.005:
+  while s_norm == -1  or s_norm > 0.01:
     J  = build_jacob(Sat_data, xv)
     F  = build_resid(Sat_data, xv)
     #Calculate the step using numpy's least squares function
