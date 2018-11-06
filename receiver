@@ -80,6 +80,13 @@ def rad_to_deg(r):
   d = math.floor(tmp)
   m = math.floor((tmp - d)*60)
   s = round(((tmp - d)*60 - m)*60, 4)
+  #NOTE: Edge case: rounding may bring the values up to their max
+  if s == 60.0:
+    s = 0.0
+    m += 1
+    if m == 60:
+      m = 0
+      d += 1
   return (d, m, s)
 
 #Calculates the vehicle time given veh and sat postion and sat time
