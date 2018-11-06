@@ -53,6 +53,8 @@ def cart_to_geo(tv, xv):
   lam = lam - 2*pi*tv/s
   while lam < -1*pi:
     lam = lam + 2*pi
+  while lam > pi:
+    lam = lam - 2*pi
 
   EW = 1
   if lam < 0: 
@@ -103,6 +105,10 @@ def calc_veh_pos(Sat_data):
     
   tv = calc_veh_time(Sat_data[0].position, xv, Sat_data[0].time)
   (lat_d, lat_m, lat_s, NS, lon_d, lon_m, lon_s, EW, h) = cart_to_geo(tv, xv)
+
+  lat_s = round(lat_s, 2)
+  lon_s = round(lon_s, 2)
+  h     = round(h, 2)
 
   return str(tv) + ' ' + str(lat_d) + ' ' + str(lat_m) + ' ' + str(lat_s) + ' ' + str(NS) + ' ' + str(lon_d) + ' ' + str(lon_m) + ' ' + str(lon_s) + ' ' + str(EW) + ' ' + str(h)
 
@@ -169,7 +175,9 @@ for line in sys.stdin:
   line_split = line.split()
   ts = float(line_split[1])
 
-  if prev_time is not 0 and abs(prev_time - ts) > 1:
+  #NOTE: A time diff of 1.0 seconds was given in the instructions, 
+  #      but .999 is used in np.dat, so we're setting .95 to be safe.
+  if prev_time is not 0 and abs(prev_time - ts) > .95:
     #A new set of satellite transmissions has begun, process the current set before reading more input
     print( calc_veh_pos(Sat_data) )
     Sat_data = []
