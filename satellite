@@ -120,7 +120,7 @@ for line in sys.stdin:
    
     #Compute ts and the satellites position at ts
     tk      = tv
-    tk_prev = 0
+    tk_prev = -1
     while tk - tk_prev:
       (xs,ys,zs) = sat.position(tk)
       distance   = ( (xs-xv)**2 + (ys-yv)**2 + (zs-zv)**2 )**(.5)
